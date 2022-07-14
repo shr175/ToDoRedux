@@ -1,12 +1,17 @@
-// import React, {useState} from 'react'
-import React, { useState} from "react";
-// import { useDispatch } from "react-redux";
-// import {actions} from './store';
+import React, { useState } from "react";
 import { connect } from "react-redux";
 
-function Create(props){
-  const[title , setTitle] = useState("");
-  const[desc , setDesc] = useState("");
+const style = {
+  border: "solid 2px",
+  padding:"15px",
+  width:"160px",
+
+};
+
+function Create(props) {
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
+  const [id,setId]= useState(1);
 
   function handleTitle(e) {
     setTitle(e.target.value);
@@ -17,71 +22,150 @@ function Create(props){
   }
 
   const handleSubmit = (e) => {
-
     e.preventDefault();
 
-    // const title = document.getElementById('title').value;
-    // const desc = document.getElementById('desc').value;
-    // const obj = {title, desc};
-    // console.log(title, obj)
-
-
-    if(!title || !desc) {
-      window.alert('Please enter title and desc')
+    if (!title || !desc) {
+      window.alert("Please enter title and desc");
     } else {
-      // props.submit(obj);
-      // document.getElementById('title').value = '';
-      // document.getElementById('desc').value = '';
+      props.submit(title, desc,id);
+      setId(id+1);
+      setTitle("");
+      setDesc("");
+      console.log("reached");
 
-      props.submit(title,desc);
-      setTitle('');
-      setDesc('');
-      console.log('reached');
 
-      
     }
-  }
+  };
 
+  const handleDelete = (deleteId) => {
+    // e.preventDefault();
+    props.delete(deleteId);
+  };
+
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    props.update(title, desc);
+  };
+
+// 
   return (
-
     <div>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-around",
+          // fontWeight: "bolder",
+        }}
+      >
+        <div>
+          <div className="top">
+            <h1>
+              <strong>Tittle</strong>
+            </h1>
+            <input
+              type="Text"
+              className="form-control"
+              onChange={handleTitle}
+              value={title}
+              id="title"
+              placeholder="text"
+            />
+          </div>
 
-       <div className="mb-3">
-           <h3>Tittle</h3>
-           <input type="Text" className="form-control" onChange={handleTitle} value={title} id="title" placeholder="text"/>
+          <div className="bottom">
+            <h1>
+              <strong>Description</strong>
+            </h1>
+            <textarea
+              className="form-control"
+              onChange={handleDesc}
+              value={desc}
+              id="desc"
+              rows="8"
+            ></textarea>
+          </div>
+
+          <button
+            type="submit"
+            className="button-style"
+            onClick={(e) => handleSubmit(e)}
+          >
+            Submit
+          </button>
+
+          
         </div>
+        <div className="table">
+          <table>
+            <thead>
+              <tr className="org">
+                <td style={style}>
+                  <strong>Title</strong>
+                </td>
+                <td style={style}>
+                  <strong>Desc</strong>
+                </td>
+                <td style={style}>
+                  <strong>Action</strong>
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              {props.tasks?.map((item,index) => (
+                <tr key = {item.id}>
+                  <td style={style}>{item.title}</td>
+                  <td style={style}>{item.desc}</td>
 
-         <div className="mb-3">
-            <h3>Description</h3>
-            <textarea className="form-control" onChange={handleDesc} value= {desc} id="desc" rows="8"></textarea>
-            </div>
+                  <td style={style}>
+                    <div className="action-style">
+                     
+                      <button
+                        type="update"
+                        className="button-style11"
+                        onClick={(e) => handleUpdate(e)}
+                      >
+                        Update
+                      </button>
 
-          <button type="submit" className='btn btn-primary' onClick={(e) => handleSubmit(e)}>Submit</button>
+                      <button
+                        type="delete"
+                        className=" button-style11"
+                        onClick={() => handleDelete(item.id)}
+                      >
+                        Delete
+                      </button>
 
-     </div>
-
-  )  
+                    </div>
+                  </td>
+                  <td style={style}>{index}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
 }
-
-
 
 const mapStateToProps = (state) => {
   return {
-
- 
-
-  }
-}
+    tasks: state.tasks,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    submit: (title, desc,id) =>
+      dispatch({ type: "submit_task", payload: { title, desc ,id} }),
 
-    // submit: (obj) => dispatch({ type: 'submit_task', payload: obj }),
-    submit: (title,desc) => dispatch({ type: 'submit_task', payload: {title,desc} }),
+    delete: (id) =>
+      dispatch({ type: "delete_task", payload: {id} }),
 
-  }
-}
+    update: (id) =>
+      dispatch({ type: "update_task", id }),
+  };
+};
 
-
-export default connect(mapStateToProps,mapDispatchToProps)(Create);
-
+export default connect(mapStateToProps, mapDispatchToProps)(Create);
