@@ -17,31 +17,83 @@ body{
 	padding: 25px;
   }
 
+.button-style{
+	border: 1px solid #3498db;
+        background-color: transparent;
+        height: 35px;
+        width: 100px;
+		font-size:10px;
+        color: #3498db;
+        font-size: 1.5em;
+		/* margin-left:25px ; */
+        box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6);
+	
+}
+
+.top, .bottom{
+	color: #3498db;
+	padding-top: 10px;
+	margin-top: 25px;
+	margin-left:25px;
+	/* border: 1px solid #3498db; */
+	/* border-color: #3498db; */
+	background-color: transparent;
+	
+}
 
 
+.bottom{
+	padding-bottom: 25px;
+}
 
+.right-side{
+	
+
+	margin-left:990px;
+}
+
+.table{
+
+	/* border: 1px solid #3498db; */
+	background-color: transparent;
+	height: 35px;
+	width: 100px;
+	/* font-size:10px; */
+	color: #3498db;
+	font-size: 1.5em;
+	margin-right:450px ;
+	/* box-shadow: 0 6px 6px rgba(0, 0, 0, 0.6); */
+	
+}
+
+.table .org td{
+	padding:25px;
+	/* width:100px; */
+}
+
+.button-style11{
+	color: #3498db;
+	/* font-size: 1.5em; */
+	font-size: 15px;
+	/* padding-right: 10px; */
+	background-color: transparent;
+	border-color:#3498db ;
+	cursor: pointer;
+}
+
+/* .action-style{
+	/* padding-right:10px; 
+} */
+	
   .container li{
 	
 	  padding: 25px;
 	  color:white; 
   }
 
-  /* .calling{
-	  text-align: center;
-	  display:grid;
-  } */
-
-  /* .btn{
-	  height: 25px;
-	  width:25px;
-	  background-color: #f4fbff;
-	  text-align: center;
-  } */
 
   .container li:hover {
-	/* hover  */
-	/* cursor:pointer; */
-	/* background-color:cyan; */
+
 	background-color:black;
 	transition: 0.7s;
 	
